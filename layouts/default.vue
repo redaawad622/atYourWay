@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app fixed :color="barColor" flat>
-      <ul class="appMenu" v-if="$vuetify.breakpoint.mdAndUp">
+      <ul class="appMenu align-center" v-if="$vuetify.breakpoint.mdAndUp">
         <li class="pe-4">
           <nuxt-link to="/" class="link">home</nuxt-link>
         </li>
@@ -18,10 +18,19 @@
       <img :src="require('~/assets/logo.jpeg')" />
 
       <v-spacer />
-      <v-menu offset-y :close-on-content-click="false">
+      <v-menu
+        offset-y
+        bottom
+        origin="center center"
+        transition="scale-transition"
+        :close-on-content-click="false"
+        :nudge-bottom="8"
+        tile
+        contentClass="noShadow"
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-magnify</v-icon>
+            <v-icon color="#333">mdi-magnify</v-icon>
           </v-btn>
         </template>
         <v-sheet class="pa-8" width="400px">
@@ -31,10 +40,18 @@
           ></v-autocomplete>
         </v-sheet>
       </v-menu>
-      <v-menu offset-y tile class="elevation-0">
+      <v-menu
+        offset-y
+        tile
+        :nudge-bottom="8"
+        origin="center center"
+        transition="scale-transition"
+        bottom
+        contentClass="noShadow"
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-account</v-icon>
+            <v-icon color="#333">mdi-account-circle-outline</v-icon>
           </v-btn>
         </template>
         <v-sheet width="250px" class="pa-8">
@@ -44,21 +61,13 @@
           <v-btn block outlined color="primary" tile>Sign Up</v-btn>
         </v-sheet>
       </v-menu>
-      <v-menu offset-y tile class="elevation-0">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-badge color="primary" content="0" offset-x="10" offset-y="10">
-              <v-icon>mdi-cart</v-icon>
-            </v-badge>
-          </v-btn>
-        </template>
-        <v-sheet width="250px" class="pa-8"> No Product In The Cart </v-sheet>
-      </v-menu>
+      <cart></cart>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+        <v-icon color="#333">mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
+      <quickview></quickview>
       <Nuxt />
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
@@ -78,11 +87,13 @@
 </template>
 
 <script>
+import Cart from '~/components/common/Cart.vue'
+import Quickview from '~/components/products/quickview.vue'
 import topMenu from '~/components/topMenu.vue'
 export default {
   name: 'Default',
 
-  components: { topMenu },
+  components: { topMenu, Quickview, Cart },
 
   data() {
     return {
@@ -135,6 +146,9 @@ export default {
 </script>
 
 <style>
+.noShadow {
+  box-shadow: none;
+}
 .link {
   text-decoration: none;
   color: #333;

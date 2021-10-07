@@ -55,6 +55,9 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
+    // icons: {
+    //   iconfont: 'mdi', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+    // },
     customVariables: ['~/assets/variables.scss'],
     theme: {
       options: { customProperties: true },

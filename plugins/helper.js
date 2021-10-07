@@ -30,4 +30,31 @@ export default ({ app }, inject) => {
       return imgPath + url
     }
   })
+
+  inject('isTouchDevice', function () {
+    return (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    )
+  })
+
+  inject('setLocal', function (name, item, stringfiy = true, alwase = true) {
+    if (stringfiy && item) {
+      item = JSON.stringify(item)
+    }
+    if (alwase) {
+      localStorage.setItem(name, item)
+    } else {
+      sessionStorage.setItem(name, item)
+    }
+    return true
+  })
+  inject('getLocal', function (name, parse = true) {
+    let item = localStorage.getItem(name) || sessionStorage.getItem(name)
+    if (item && parse) {
+      item = JSON.parse(item)
+    }
+    return item
+  })
 }
