@@ -5,6 +5,7 @@
     hide-delimiter-background
     :hide-delimiters="$vuetify.breakpoint.xs"
     show-arrows-on-hover
+    cycle
   >
     <template v-slot:prev="{ on, attrs }">
       <v-btn

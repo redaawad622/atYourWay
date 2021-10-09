@@ -1,6 +1,8 @@
 export const state = () => ({
   carouselCollection: [],
   featuredProducts: [],
+  featuredCategories: [],
+  sliderProducts: [],
 })
 export const getters = {
   carouselCollection(state) {
@@ -8,6 +10,12 @@ export const getters = {
   },
   featuredProducts(state) {
     return state.featuredProducts
+  },
+  featuredCategories(state) {
+    return state.featuredCategories
+  },
+  sliderProducts(state) {
+    return state.sliderProducts
   },
 }
 
@@ -21,6 +29,8 @@ export const mutations = {
   },
   setHomeContetent(state, payload) {
     state.featuredProducts = payload.featuredProducts
+    state.featuredCategories = payload.featuredCategories
+    state.sliderProducts = payload.sliderProducts
   },
 }
 export const actions = {

@@ -175,7 +175,7 @@ export default {
     price() {
       const $keys = Object.keys(this.product.attributes)
       return Object.values(this.product.attributes).reduce((a, i, index) => {
-        this.attributes[$keys[index]] = i[0].value
+        this.attributes[$keys[index]] = i[0].id
         return +i[0].price + a
       }, +this.product.sale_price)
     },

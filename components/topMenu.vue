@@ -58,7 +58,7 @@ export default {
     hasSubs(children) {
       let sub = false
       children.forEach((element) => {
-        if (element.children.length < 1) {
+        if (element.children && element.children.length < 1) {
           sub = false
         } else {
           sub = true

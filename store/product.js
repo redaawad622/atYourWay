@@ -18,7 +18,7 @@ export const mutations = {
   addToCart(state, payload) {
     const index = state.cart.findIndex((v) => {
       return (
-        Object.is(v.attributes, payload.attributes) &&
+        this.$shallowEqual(v.attributes, payload.attributes) &&
         v.product.id === payload.product.id
       )
     })
