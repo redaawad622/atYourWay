@@ -21,9 +21,20 @@
             )
           "
           @click="$router.push(`/${product.slug}`)"
-          min-height="380px"
+          :min-height="$vuetify.breakpoint.xs ? 'auto' : '410px'"
+          :max-height="$vuetify.breakpoint.xs ? '410px' : '450px'"
           :max-width="$vuetify.breakpoint.xs ? 'auto' : '350px'"
         >
+          <div style="top: 30px; position: relative">
+            <div class="mb-3">
+              <span class="primary white--text lblProd"
+                >{{ product.discount }}%</span
+              >
+            </div>
+            <div v-if="isNew">
+              <span class="secondary white--text lblProd">New</span>
+            </div>
+          </div>
         </v-img>
       </v-col>
       <v-col cols="12" sm="6">
@@ -119,6 +130,11 @@ export default {
     }
   },
   computed: {
+    isNew() {
+      const date = new Date(this.product.created_at)
+      date.setDate(date.getDate() + 2)
+      return date >= new Date()
+    },
     getDeadLine() {
       return new Date(
         new Date(this.product.startDate + ' UTC').getTime() +
@@ -174,5 +190,11 @@ export default {
   background: transparent;
   width: 100%;
   height: 100%;
+}
+.lblProd {
+  font-size: 12px;
+  padding: 3px 10px;
+  width: 50px;
+  display: block;
 }
 </style>

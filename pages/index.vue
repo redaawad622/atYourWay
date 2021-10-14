@@ -6,6 +6,7 @@
       <homeFeaturedProducts></homeFeaturedProducts>
     </v-container>
     <homeSliderProducts></homeSliderProducts>
+    <homeJoinUs></homeJoinUs>
   </v-sheet>
 </template>
 <script>

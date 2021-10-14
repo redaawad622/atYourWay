@@ -15,7 +15,8 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <img :src="require('~/assets/logo.jpeg')" />
+      <span class="secondary--text font-weight-black headline">Ayw</span>
+
 
       <v-spacer />
       <v-menu
@@ -68,6 +69,7 @@
     </v-app-bar>
     <v-main>
       <quickview></quickview>
+      <image-pop></image-pop>
       <Nuxt />
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
@@ -80,20 +82,20 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <app-footer></app-footer>
   </v-app>
 </template>
 
 <script>
+import AppFooter from '~/components/common/appFooter.vue'
 import Cart from '~/components/common/Cart.vue'
+import ImagePop from '~/components/common/imagePop.vue'
 import Quickview from '~/components/products/quickview.vue'
 import topMenu from '~/components/topMenu.vue'
 export default {
   name: 'Default',
 
-  components: { topMenu, Quickview, Cart },
+  components: { topMenu, Quickview, Cart, AppFooter, ImagePop },
 
   data() {
     return {

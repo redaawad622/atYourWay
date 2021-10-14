@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="mt-8" v-if="products.length > 0" color="#f5f7fa">
+  <v-sheet class="mt-8" v-if="products.length > 0" color="back">
     <v-container>
       <v-carousel
         height="auto"

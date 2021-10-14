@@ -72,6 +72,8 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
           textGrey: '#666',
+          borderColor: '#cedae3',
+          back: '#f5f7fa',
         },
         dark: {
           primary: '#fe3060',
@@ -81,6 +83,8 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
           textGrey: '#666',
+          borderColor: '#cedae3',
+          back: '#f5f7fa',
         },
       },
     },
