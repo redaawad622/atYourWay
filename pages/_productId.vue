@@ -1,18 +1,19 @@
 <template>
-  <v-card class="pb-6 mt-3 px-3" v-if="product">
+  <v-card class="pb-6 mt-3 px-16" v-if="product" flat>
     <v-row>
       <v-col cols="12" sm="6">
         <v-row>
           <v-col cols="12" class="px-1">
             <v-img
-              height="420px"
+              max-height="650px"
               class="mx-2"
+              contain
               :src="$getUrl(product.images[selectedImage].full)"
               @click="openImage(selectedImage)"
             ></v-img>
           </v-col>
           <v-col cols="12" class="px-2">
-            <v-slide-group :show-arrows="product.images.length > 2">
+            <v-slide-group :show-arrows="product.images.length > 2" class="prodslide">
               <v-slide-item
                 v-for="($img, k) in product.images"
                 :key="'quickImage' + k"
@@ -212,12 +213,12 @@ export default {
       rate: 0,
     }
   },
+
   async fetch() {
-    await this.$store
-      .dispatch('product/getProduct', this.$route.params.productId)
-      .then((res) => {
-        console.log(res)
-      })
+    await this.$store.dispatch(
+      'product/getProduct',
+      this.$route.params.productId
+    )
   },
   computed: {
     product() {
@@ -226,6 +227,23 @@ export default {
     contentClass() {
       return this.$vuetify.breakpoint.smAndDown ? 'mx-2' : ''
     },
+  },
+  head() {
+    return {
+      title: this.product
+        ? this.product.metaTitle || this.product.title
+        : 'product',
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.product
+            ? this.product.metaDescription || this.product.description
+            : 'product',
+        },
+      ],
+    }
   },
   methods: {
     openImage(k) {
@@ -266,7 +284,9 @@ export default {
       }
     },
   },
-
+  destroyed() {
+    this.$store.commit('product/setProduct', { data: null })
+  },
   watch: {
     product(val) {
       this.attributes = {}
@@ -325,5 +345,8 @@ export default {
 }
 #quaInputQuickView {
   text-align: center;
+}
+.prodslide  .v-slide-group__content{
+  justify-content: center;
 }
 </style>

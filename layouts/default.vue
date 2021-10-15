@@ -17,7 +17,6 @@
       <v-spacer></v-spacer>
       <span class="secondary--text font-weight-black headline">Ayw</span>
 
-
       <v-spacer />
       <v-menu
         offset-y
@@ -169,5 +168,19 @@ export default {
 .appMenu {
   list-style: none;
   display: flex;
+}
+.nativeSelect {
+  width: 200px;
+  box-shadow: 0 0 0;
+  border: 1px solid #ebebeb;
+  height: 40px;
+  -webkit-appearance: none;
+  background: #fff
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAPklEQVR4Ae3TwREAEBQD0V/6do4SXPZg7EsBhsQ8IEmSMOsiuEfg3gL3oXC7wK0bd1G4o8X9F4yIkyQfSrIByQBjp7QuND8AAAAASUVORK5CYII=)
+    no-repeat scroll right 0.5rem center/1.25rem 1.25rem;
+  padding: 0 0.5rem;
+}
+.nativeSelect:focus {
+  outline: 1px solid var(--v-primary-base);
 }
 </style>

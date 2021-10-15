@@ -25,6 +25,7 @@
                 height="420px"
                 class="mx-2"
                 :src="$getUrl(product.images[selectedImage].full)"
+                contain
               ></v-img>
             </v-col>
             <v-col cols="2">
@@ -36,6 +37,7 @@
                 height="70px"
                 :class="{ selected: k == selectedImage }"
                 @click="selectedImage = k"
+                contain
               ></v-img>
             </v-col>
           </v-row>
@@ -148,7 +150,7 @@ export default {
         this.$forceUpdate()
       })
     },
-     addToCart() {
+    addToCart() {
       this.$store.commit('product/addToCart', {
         product: this.product,
         quantity: this.quantity,

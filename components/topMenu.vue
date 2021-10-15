@@ -11,8 +11,10 @@
     :close-delay="100"
   >
     <template v-slot:activator="{ on, attrs }">
-      <li class="px-4 link" v-bind="attrs" v-on="on" >
-        <nuxt-link class="link" :to="`/${menu.slug}`">{{ menu.name }}<v-icon small>mdi-chevron-down</v-icon></nuxt-link>
+      <li class="px-4 link" v-bind="attrs" v-on="on">
+        <nuxt-link class="link" :to="`/categories/${menu.slug}`"
+          >{{ menu.name }}<v-icon small>mdi-chevron-down</v-icon></nuxt-link
+        >
       </li>
     </template>
     <ul
@@ -27,7 +29,7 @@
           :key="sub.id + 'subM'"
         >
           <nuxt-link
-            :to="'/' + sub.slug"
+            :to="'/categories/' + sub.slug"
             class="link"
             :class="{ hasSub: sub.children.length > 0 }"
             >{{ sub.name }}</nuxt-link
@@ -44,7 +46,9 @@
     </ul>
     <ul v-else class="ul-level1">
       <li v-for="sub in menu.children" :key="sub.id + 'subM'">
-        <nuxt-link :to="'/' + sub.slug" class="link">{{ sub.name }}</nuxt-link>
+        <nuxt-link :to="'/categories/' + sub.slug" class="link">{{
+          sub.name
+        }}</nuxt-link>
       </li>
     </ul>
   </v-menu>
@@ -112,8 +116,7 @@ ul {
   > a {
     color: var(--v-secondary-base);
     border-bottom: 1px solid #ebebeb;
-  font-weight: 600;
-
+    font-weight: 600;
   }
 }
 </style>

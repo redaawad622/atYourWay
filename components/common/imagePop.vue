@@ -1,18 +1,25 @@
 <template>
-  <v-dialog :value="product" @input="clear" v-if="!$vuetify.breakpoint.xs">
-    <v-card v-if="product" color="transparent">
+  <v-dialog
+    :value="product"
+    @input="clear"
+    v-if="!$vuetify.breakpoint.xs"
+    content-class="popImage"
+  >
+    <v-card v-if="product" color="transparent" flat max-height="100%">
       <v-row>
         <v-col cols="12" class="px-1">
           <v-img
-            height="auto"
-            max-height="800px"
             class="mx-2"
+            max-height="68vh"
             contain
             :src="$getUrl(product.images[selectedImage].full)"
           ></v-img>
         </v-col>
-        <v-col cols="12" class="px-2">
-          <v-slide-group :show-arrows="product.images.length > 2">
+        <v-col cols="12" class="px-2 d-flex justify-center">
+          <v-slide-group
+            :show-arrows="product.images.length > 2"
+            class="prodslide"
+          >
             <v-slide-item
               v-for="($img, k) in product.images"
               :key="'quickImage' + k"
@@ -64,5 +71,8 @@ export default {
 .selected {
   opacity: 1;
   border: 1px solid var(--v-primary-base);
+}
+.popImage.v-dialog {
+  box-shadow: none;
 }
 </style>

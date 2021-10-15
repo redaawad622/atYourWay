@@ -25,16 +25,15 @@
         <v-list-item
           v-for="(item, k) in cart"
           :key="item.product.id + 'cart' + item.product.title"
+          :to="`/${item.product.slug}`"
         >
           <v-list-item-avatar tile width="50px" height="auto">
-            <v-img :src="item.product.images[0].full"></v-img>
+            <v-img :src="$getUrl(item.product.images[0].full)"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              @click="$router.push(`/${product.slug}`)"
-              class="cartItemTitle"
-              >{{ item.product.title }}</v-list-item-title
-            >
+            <v-list-item-title class="cartItemTitle">{{
+              item.product.title
+            }}</v-list-item-title>
             <v-list-item-subtitle class="primary--text"
               >{{ item.product.sale_price }}
               <v-chip class="mx-1" small>{{ item.quantity }}</v-chip>
