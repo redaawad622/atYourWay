@@ -113,7 +113,7 @@ export default {
 .v-window__prev,
 .v-window__next {
   margin: 0;
-  background: transparent;
+  background: transparent !important;
 }
 .btnHover:hover {
   background-color: var(--v-primary-base) !important;
