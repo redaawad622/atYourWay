@@ -10,7 +10,7 @@ function isURL(str) {
 }
 const imgPath =
   process.env.NODE_ENV === 'production'
-    ? ''
+    ? 'https://api.atyourway.com/' + 'storage/images/'
     : 'http://localhost:8000/' + 'storage/images/'
 export default ({ app }, inject) => {
   inject('getUrl', function (url, id) {
