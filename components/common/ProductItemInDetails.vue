@@ -10,7 +10,6 @@
       <v-col cols="12" sm="6">
         <v-img
           eager
-          contain
           :class="{
             'ms-auto': !$vuetify.breakpoint.xs,
             'mx-auto': $vuetify.breakpoint.xs,

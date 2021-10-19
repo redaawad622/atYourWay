@@ -11,7 +11,6 @@
     <v-row class="ma-0" :class="{ 'justify-center': $vuetify.breakpoint.xs }">
       <v-img
         eager
-        contain
         :src="
           $getUrl(
             product.images[hover ? (product.images.length > 1 ? 1 : 0) : 0].full

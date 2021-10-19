@@ -5,6 +5,7 @@
     bottom
     offset-y
     :close-on-content-click="false"
+    open-on-hover
     tile
     :nudge-bottom="8"
     max-height="600px"
@@ -17,10 +18,11 @@
         </v-badge>
       </v-btn>
     </template>
-    <v-sheet class="pa-8" v-if="cart && cart.length > 0">
+    <v-sheet class="pa-9" v-if="cart && cart.length > 0">
       <v-list-item-title class="text-capitalize headline"
         >your cart: {{ cartLen }}</v-list-item-title
       >
+      <v-divider class="my-3"></v-divider>
       <v-list>
         <v-list-item
           v-for="(item, k) in cart"
@@ -35,7 +37,7 @@
               item.product.title
             }}</v-list-item-title>
             <v-list-item-subtitle class="primary--text"
-              >{{ item.product.sale_price }}
+              >{{ price(item) }}
               <v-chip class="mx-1" small>{{ item.quantity }}</v-chip>
             </v-list-item-subtitle>
           </v-list-item-content>
@@ -46,6 +48,17 @@
           >
         </v-list-item>
       </v-list>
+      <v-divider class="my-3"></v-divider>
+      <v-row align="center" justify="center">
+        <v-btn
+          color="primary"
+          to="/cart"
+          class="btnHoverSecondary mt-6"
+          tile
+          elevation="0"
+          >checkout</v-btn
+        >
+      </v-row>
     </v-sheet>
     <v-sheet v-else width="250px" class="pa-8">
       No Product In The Cart
@@ -55,7 +68,7 @@
 
 <script>
 export default {
-  name: 'cart',
+  name: 'cartMnue',
   computed: {
     cart() {
       return this.$store.getters['product/cart']
@@ -65,6 +78,15 @@ export default {
     },
   },
   methods: {
+    price(item) {
+      const ids = Object.keys(item.attributes).map((e) =>
+        item.product.attributes[e].find((n) => n.id === item.attributes[e])
+      )
+      return Object.values(ids).reduce(
+        (a, i) => +i.price + a,
+        +item.product.sale_price
+      )
+    },
     removeFromCart(k) {
       this.$store.commit('product/removeFromCart', k)
     },

@@ -57,6 +57,10 @@ export const mutations = {
     state.cart.splice(payload, 1)
     this.$setLocal('localCart', state.cart)
   },
+  updateQ(state, payload) {
+    state.cart[payload.index].quantity = payload.val
+    this.$setLocal('localCart', state.cart)
+  },
 }
 export const actions = {
   getProduct({ commit }, payload) {

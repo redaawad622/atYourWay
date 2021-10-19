@@ -70,4 +70,7 @@ export default ({ app }, inject) => {
     }
     return true
   })
+  inject('round', function (num) {
+    return Math.round(num)
+  })
 }

@@ -1,0 +1,12 @@
+.btnHoverSecondary:hover {
+  background-color: var(--v-secondary-base) !important;
+}
+.btnHover:hover {
+  background-color: var(--v-primary-base) !important;
+}
+.max-flex {
+  flex: 1;
+}
+.inputPrice input {
+  text-align: center;
+}

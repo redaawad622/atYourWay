@@ -107,6 +107,7 @@ export default {
       return this.$store.getters['home/carouselCollection']
     },
   },
+
 }
 </script>
 <style lang="scss">
@@ -115,12 +116,8 @@ export default {
   margin: 0;
   background: transparent !important;
 }
-.btnHover:hover {
-  background-color: var(--v-primary-base) !important;
-}
-.btnHoverSecondary:hover {
-  background-color: var(--v-secondary-base) !important;
-}
+
+
 .cover-text {
   position: absolute;
   right: 50%;
@@ -132,6 +129,7 @@ export default {
     line-height: normal;
   }
 }
+
 .cover-text.right {
   position: absolute;
   left: 50%;
