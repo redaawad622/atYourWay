@@ -7,6 +7,7 @@
     :close-on-content-click="false"
     open-on-hover
     tile
+    :close-delay="100"
     :nudge-bottom="8"
     max-height="600px"
     contentClass="noShadow"

@@ -15,7 +15,11 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <span class="secondary--text font-weight-black headline">Ayw</span>
+      <nuxt-link
+        to="/"
+        class="text-decoration-none secondary--text font-weight-black headline"
+        >Ayw</nuxt-link
+      >
 
       <v-spacer />
       <v-menu
@@ -55,10 +59,12 @@
           </v-btn>
         </template>
         <v-sheet width="250px" class="pa-8">
-          <v-btn block outlined color="primary" class="mb-4" tile
+          <v-btn block to="/login" exact outlined color="primary" class="mb-4" tile
             >Sign in</v-btn
           >
-          <v-btn block outlined color="primary" tile>Sign Up</v-btn>
+          <v-btn to="/login?sign=true" block outlined color="primary" tile
+            >Sign Up</v-btn
+          >
         </v-sheet>
       </v-menu>
       <cart></cart>

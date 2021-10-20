@@ -1,0 +1,68 @@
+<template>
+  <v-container>
+    <v-row justify="center">
+      <v-card class="my-16" width="500px">
+        <v-card-text class="pa-6">
+          <sign-form v-if="sign"></sign-form>
+          <login-form v-else></login-form>
+          <v-row justify="center">
+            <v-btn
+              v-if="sign"
+              class="btnHoverSecondary"
+              elevation="0"
+              color="primary"
+              tile
+              >Create
+            </v-btn>
+            <v-btn
+              v-else
+              class="btnHoverSecondary"
+              elevation="0"
+              color="primary"
+              tile
+              >Sign in
+            </v-btn>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-row justify="center" class="pa-6">
+          <span
+            v-if="!sign"
+            @click="sign = true"
+            class="text-decoration-none textAsLink"
+            >No account? <strong>Create one here</strong></span
+          >
+          <span
+            v-else
+            @click="sign = false"
+            class="text-decoration-none textAsLink"
+            >Already have an account? <strong>Log in instead!</strong>
+          </span>
+        </v-row>
+      </v-card>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import loginForm from '~/components/auth/loginForm.vue'
+import SignForm from '~/components/auth/signForm.vue'
+export default {
+  components: { loginForm, SignForm },
+  data() {
+    return {
+      sign: false,
+    }
+  },
+
+  watch: {
+    $route() {
+      if (this.$route.query.sign) {
+        this.sign = true
+      } else {
+        this.sign = false
+      }
+    },
+  },
+}
+</script>

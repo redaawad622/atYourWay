@@ -10,3 +10,10 @@
 .inputPrice input {
   text-align: center;
 }
+.textAsLink {
+  color: var(--v-primary-base) !important;
+}
+.textAsLink:hover {
+  color: var(--v-secondary-base) !important;
+  cursor: pointer;
+}
