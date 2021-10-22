@@ -1,7 +1,6 @@
 <template>
   <v-carousel
     height="auto"
-    style="max-height: 550px"
     hide-delimiter-background
     :hide-delimiters="$vuetify.breakpoint.xs"
     show-arrows-on-hover
@@ -39,7 +38,9 @@
           <v-img
             eager
             :src="$getUrl(slide.url)"
-            max-height="550px"
+            :aspect-ratio="
+              $vuetify.breakpoint.mdAndUp ? 2.5 : $vuetify.breakpoint.sm ? 2 : 2
+            "
             max-width="100%"
           >
             <div
@@ -107,7 +108,6 @@ export default {
       return this.$store.getters['home/carouselCollection']
     },
   },
-
 }
 </script>
 <style lang="scss">
@@ -116,7 +116,6 @@ export default {
   margin: 0;
   background: transparent !important;
 }
-
 
 .cover-text {
   position: absolute;
@@ -150,8 +149,9 @@ export default {
   }
 }
 @media all and (max-width: 600px) {
-  .cover-text {
-    top: 10%;
+  .cover-text,
+  .cover-text.right {
+    top: 30%;
     span.text-title {
       font-size: 16px;
     }

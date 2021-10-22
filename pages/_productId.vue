@@ -1,99 +1,113 @@
 <template>
-  <v-card class="pb-6 mt-3 px-16" v-if="product" flat>
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-row>
-          <v-col cols="12" class="px-1">
-            <v-img
-              max-height="650px"
-              class="mx-2"
-              contain
-              :src="$getUrl(product.images[selectedImage].full)"
-              @click="openImage(selectedImage)"
-            ></v-img>
-          </v-col>
-          <v-col cols="12" class="px-2">
-            <v-slide-group :show-arrows="product.images.length > 2" class="prodslide">
-              <v-slide-item
-                v-for="($img, k) in product.images"
-                :key="'quickImage' + k"
-              >
-                <v-img
-                  :src="$getUrl($img.full)"
-                  class="mb-3 imageBorder mx-1"
-                  height="100px"
-                  max-width="80px"
-                  :class="{ selected: k == selectedImage }"
-                  @click="selectedImage = k"
-                ></v-img>
-              </v-slide-item>
-            </v-slide-group>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-card-title class="pa-0 display-1">{{ product.title }}</v-card-title>
-        <div class="mt-4 headline primary--text">{{ sale_price }} EGP</div>
-        <div
-          v-for="(attribute, index) in product.attributes"
-          :key="'attri' + index"
-        >
-          <v-card-title class="px-0 secondary--text">{{
-            attribute[0].attribute.name
+  <v-card
+    class="pb-6 mt-3"
+    :class="{
+      'px-16': $vuetify.breakpoint.mdAndUp,
+      'px-8': $vuetify.breakpoint.sm,
+      'px-2': $vuetify.breakpoint.xs,
+    }"
+    v-if="product"
+    flat
+  >
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-row>
+            <v-col cols="12" class="px-1">
+              <v-img
+                max-height="650px"
+                max-width="520px"
+                class="mx-2"
+                :aspect-ratio="0.8"
+                :src="$getUrl(product.images[selectedImage].full)"
+                @click="openImage(selectedImage)"
+              ></v-img>
+            </v-col>
+            <v-col cols="12" class="px-2" v-if="product.images.length > 0">
+              <v-slide-group mandatory :show-arrows="!$vuetify.breakpoint.xs">
+                <v-slide-item
+                  v-for="($img, k) in product.images"
+                  :key="'quickImage' + k"
+                >
+                  <v-img
+                    :src="$getUrl($img.full)"
+                    class="mb-3 imageBorder mx-1"
+                    height="100px"
+                    max-width="80px"
+                    :class="{ selected: k == selectedImage }"
+                    @click="selectedImage = k"
+                  ></v-img>
+                </v-slide-item>
+              </v-slide-group>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-card-title class="pa-0 display-1">{{
+            product.title
           }}</v-card-title>
-          <select
-            class="nativeSelect"
-            @change="setItem($event, index)"
-            :value="attributes[index]"
+          <div class="mt-4 headline primary--text">{{ sale_price }} EGP</div>
+          <div
+            v-for="(attribute, index) in product.attributes"
+            :key="'attri' + index"
           >
-            <option
-              v-for="item in attribute"
-              :key="'attriItem' + item.id"
-              :value="item.id"
+            <v-card-title class="px-0 secondary--text">{{
+              attribute[0].attribute.name
+            }}</v-card-title>
+            <select
+              class="nativeSelect"
+              @change="setItem($event, index)"
+              :value="attributes[index]"
             >
-              {{ item.value }}
-            </option></select
-          ><span
-            class="mx-2"
-            v-if="+attribute.find((x) => x.id == attributes[index]).price"
-            >+{{
-              +attribute.find((x) => x.id == attributes[index]).price
-            }}</span
-          >
-        </div>
-        <div>
-          <v-card-title class="px-0 secondary--text">Quantity</v-card-title>
-          <v-sheet class="d-flex">
-            <v-text-field
-              append-icon="mdi-plus"
-              prepend-inner-icon="mdi-minus"
-              v-model="quantity"
-              hide-details
-              height="40px"
-              type="number"
-              outlined
-              style="flex: unset !important; border-radius: 0; width: 120px"
-              id="quaInputQuickView"
-              dense
-              class="inputPrice"
-              @click:append="quantity++"
-              @click:prepend-inner="quantity--"
-            ></v-text-field>
-            <v-btn
-              color="#000"
-              dark
-              width="155px"
-              height="40px"
-              class="text-capitalize mx-3"
-              elevation="0"
-              @click="addToCart"
-              tile
-              >Add To Cart</v-btn
+              <option
+                v-for="item in attribute"
+                :key="'attriItem' + item.id"
+                :value="item.id"
+              >
+                {{ item.value }}
+              </option></select
+            ><span
+              class="mx-2"
+              v-if="+attribute.find((x) => x.id == attributes[index]).price"
+              >+{{
+                +attribute.find((x) => x.id == attributes[index]).price
+              }}</span
             >
-          </v-sheet>
-        </div>
-      </v-col>
-    </v-row>
+          </div>
+          <div>
+            <v-card-title class="px-0 secondary--text">Quantity</v-card-title>
+            <v-sheet class="d-flex">
+              <v-text-field
+                append-icon="mdi-plus"
+                prepend-inner-icon="mdi-minus"
+                v-model="quantity"
+                hide-details
+                height="40px"
+                type="number"
+                outlined
+                style="flex: unset !important; border-radius: 0; width: 120px"
+                id="quaInputQuickView"
+                dense
+                class="inputPrice"
+                @click:append="quantity++"
+                @click:prepend-inner="quantity--"
+              ></v-text-field>
+              <v-btn
+                color="#000"
+                dark
+                width="155px"
+                height="40px"
+                class="text-capitalize mx-3"
+                elevation="0"
+                @click="addToCart"
+                tile
+                >Add To Cart</v-btn
+              >
+            </v-sheet>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-tabs
       v-model="tab"
       class="mt-12"
@@ -197,11 +211,14 @@
 
       <div class="grey--text ms-4">1 (413)</div>
     </v-row>
+    <sugg-products ></sugg-products>
   </v-card>
 </template>
 
 <script>
+import suggProducts from '~/components/products/suggProducts.vue'
 export default {
+  components: { suggProducts },
   name: 'productPage',
   data: () => {
     return {
@@ -345,8 +362,5 @@ export default {
 }
 #quaInputQuickView {
   text-align: center;
-}
-.prodslide  .v-slide-group__content{
-  justify-content: center;
 }
 </style>

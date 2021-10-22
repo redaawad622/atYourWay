@@ -6,19 +6,19 @@
         'display-1': !$vuetify.breakpoint.xs,
         headline: !$vuetify.breakpoint.xs,
       }"
-      >Featured Products</v-card-title
+      >other products in the same categories</v-card-title
     >
     <v-slide-group center-active :show-arrows="!$vuetify.breakpoint.xs">
       <v-slide-item
         v-slot="{ toggle }"
         v-for="(product, k) in products"
-        :key="product.sku + product.name + k"
+        :key="product.sku + product.name + k+'sugg'"
       >
         <div class="mx-4">
           <product-item
             @click="toggle"
             :product="product"
-            module="home"
+            module="products"
           ></product-item>
         </div>
       </v-slide-item>
@@ -30,10 +30,10 @@
 import ProductItem from '../common/ProductItem.vue'
 export default {
   components: { ProductItem },
-  name: 'featuredProducts',
+  name: 'suggProducts',
   computed: {
     products() {
-      return this.$store.getters['home/featuredProducts']
+      return this.$store.getters['product/suggProducts']
     },
   },
 }

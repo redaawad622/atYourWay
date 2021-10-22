@@ -13,13 +13,15 @@
         eager
         :src="
           $getUrl(
-            product.images[hover ? (product.images.length > 1 ? 1 : 0) : 0].full
+            product.images[0]
+              ? product.images[hover ? (product.images.length > 1 ? 1 : 0) : 0]
+                  .full
+              : ''
           )
         "
-        height="350px"
-        :max-width="
-          isList ? ($vuetify.breakpoint.smAndDown ? 300 : 260) : '100%'
-        "
+        :aspect-ratio="0.8"
+        min-height="340px"
+        min-width="272px"
       >
         <div @click="$router.push(`/${product.slug}`)" class="over"></div>
         <v-speed-dial

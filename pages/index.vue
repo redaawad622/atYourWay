@@ -1,5 +1,5 @@
 <template>
-  <v-sheet :class="{ 'px-3': $vuetify.breakpoint.xs }">
+  <v-sheet >
     <homeCarousel></homeCarousel>
     <homeFeaturedCategoriesSlide></homeFeaturedCategoriesSlide>
     <v-container fluid>

@@ -4,10 +4,14 @@ export const state = () => ({
   product: null,
   selectedProduct: null,
   selectedImage: 0,
+  suggProducts: [],
 })
 export const getters = {
   quickview(state) {
     return state.quickview
+  },
+  suggProducts(state) {
+    return state.suggProducts
   },
   selectedImage(state) {
     return state.selectedImage
@@ -34,7 +38,8 @@ export const mutations = {
     state.selectedProduct = payload
   },
   setProduct(state, payload) {
-    state.product = payload.data
+    state.product = payload.product
+    state.suggProducts = payload.suggProducts
   },
   addToCart(state, payload) {
     const index = state.cart.findIndex((v) => {

@@ -1,5 +1,5 @@
 <template>
-  <v-footer>
+  <v-footer class="pa-0">
     <v-sheet :color="'back'" class="py-8" width="100%">
       <v-container>
         <v-row>

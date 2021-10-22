@@ -17,3 +17,8 @@
   color: var(--v-secondary-base) !important;
   cursor: pointer;
 }
+.v-slide-group__next,
+.v-slide-group__prev {
+  flex: 0 1 20px !important;
+  min-width: 20px !important;
+}
