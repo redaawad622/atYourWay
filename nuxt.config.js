@@ -46,7 +46,7 @@ export default {
     baseURL:
       process.env.NODE_ENV == 'development'
         ? 'http://localhost:8000'
-        : 'http://api.atyourway.com',
+        : 'https://api.atyourway.com',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
