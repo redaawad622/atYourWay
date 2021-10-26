@@ -15,8 +15,8 @@ export default {
   },
 
   env: {
-    baseUrl: process.env.BASE_URL,
-    store_id: process.env.store_id,
+    baseUrl: process.env.BASE_URL || 5,
+    store_id: process.env.store_id || 2,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
