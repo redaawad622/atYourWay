@@ -4,8 +4,8 @@
       <v-card class="my-16" width="500px">
         <v-card-text class="pa-6">
           <sign-form v-if="sign"></sign-form>
-          <login-form v-else></login-form>
-          <v-row justify="center">
+          <login-form :serverErr="serverErr" v-else></login-form>
+          <v-row justify="center" class="mt-0">
             <v-btn
               v-if="sign"
               class="btnHoverSecondary"
@@ -20,6 +20,8 @@
               elevation="0"
               color="primary"
               tile
+              :loading="loginLoading"
+              @click="login()"
               >Sign in
             </v-btn>
           </v-row>
@@ -48,11 +50,34 @@
 import loginForm from '~/components/auth/loginForm.vue'
 import SignForm from '~/components/auth/signForm.vue'
 export default {
+  auth: 'guest',
   components: { loginForm, SignForm },
   data() {
     return {
       sign: false,
+      loginLoading: false,
+      serverErr: [],
     }
+  },
+  methods: {
+    login() {
+      this.serverErr = []
+      this.loginLoading = true
+
+      this.$store
+        .dispatch('authUser/login')
+        .then((res) => {
+          console.log(res)
+          this.loginLoading = false
+        })
+        .catch((rej) => {
+          console.log(rej)
+          if (rej.response.status === 422)
+            this.serverErr = rej.response.data.errors
+
+          this.loginLoading = false
+        })
+    },
   },
 
   watch: {

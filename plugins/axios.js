@@ -1,6 +1,8 @@
 export default function ({ $axios }) {
   $axios.defaults.params = $axios.defaults.params || {}
-  $axios.defaults.params.store_id = process.env.store_id || 3
-  console.log('base', process.env.baseUrl)
-  console.log('store', process.env.store_id)
+  if (process.env.NODE_ENV === 'development') {
+    $axios.defaults.params.store_id = 1
+  } else {
+    $axios.defaults.params.store_id = process.env.store_id
+  }
 }

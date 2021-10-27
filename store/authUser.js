@@ -2,6 +2,7 @@ export const state = () => ({
   loginForm: {
     email: '',
     password: '',
+    device_name: 'web-front',
   },
   signUpForm: {
     email: '',
@@ -27,6 +28,16 @@ export const mutations = {
   setSignUporm(state, payload) {
     state.signUpForm[payload.name] = payload.value
   },
+  setUser(state, payload) {
+    const clone = Object.assign({}, payload, { token: undefined })
+    console.log(clone)
+    state.loginForm = {
+      email: '',
+      password: '',
+      device_name: 'web-front',
+    }
+    this.$auth.setUser(clone)
+  },
 }
 export const actions = {
   getCategory({ commit }, payload) {
@@ -35,5 +46,24 @@ export const actions = {
         commit('setCategory', res.data)
       }
     )
+  },
+  async login({ commit, state }) {
+    const agent = this.$info()
+    commit('setLoginForm', {
+      name: 'device_name',
+      value:
+        agent.browser.os +
+        '-' +
+        agent.browser.name +
+        '-' +
+        agent.browser.version,
+    })
+    return await this.$auth
+      .loginWith('local', {
+        data: state.loginForm,
+      })
+      .then((res) => {
+        commit('setUser', res.data)
+      })
   },
 }

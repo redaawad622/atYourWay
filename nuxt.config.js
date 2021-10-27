@@ -15,8 +15,7 @@ export default {
   },
 
   env: {
-    baseUrl: process.env.BASE_URL || 5,
-    store_id: process.env.store_id || 2,
+    store_id: process.env.store_id || 0,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -44,6 +43,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -100,6 +100,44 @@ export default {
     },
   },
 
+  router: {
+    middleware: ['auth'],
+  },
+  auth: {
+    strategies: {
+      cookie:{
+        token: {
+          property: 'token.token',
+          global: true,
+          required: false,
+          type: false
+        },
+        endpoints: {
+          login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
+          user: false,
+        },
+      },
+      local: {
+        token: {
+          property: 'token.token',
+          global: true,
+
+        },
+        user:{
+          property:false
+        },
+        endpoints: {
+          login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
+          user: { url: '/api/user', method: 'get' },
+        },
+      },
+      github: {
+        /* ... */
+      },
+    },
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     //  analyze: true,
