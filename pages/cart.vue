@@ -31,6 +31,7 @@ import cartItem from '~/components/cart/cartItem.vue'
 import CartTotalSection from '~/components/cart/cartTotalSection.vue'
 export default {
   name: 'cart',
+  auth: false,
 
   components: { cartItem, CartTotalSection },
   data() {

@@ -8,7 +8,7 @@ export const state = () => ({
     email: '',
     name: '',
     password: '',
-    phone: '',
+    phone_number: '',
   },
   meta: { total: 0 },
 })
@@ -25,7 +25,7 @@ export const mutations = {
   setLoginForm(state, payload) {
     state.loginForm[payload.name] = payload.value
   },
-  setSignUporm(state, payload) {
+  setSignUpForm(state, payload) {
     state.signUpForm[payload.name] = payload.value
   },
   setUser(state, payload) {
@@ -64,6 +64,24 @@ export const actions = {
       })
       .then((res) => {
         commit('setUser', res.data)
+      })
+  },
+  async sign({ commit, state }) {
+    const agent = this.$info()
+    commit('setSignUpForm', {
+      name: 'device_name',
+      value:
+        agent.browser.os +
+        '-' +
+        agent.browser.name +
+        '-' +
+        agent.browser.version,
+    })
+    return await this.$axios
+      .post(`/api/register`, state.signUpForm)
+      .then((res) => {
+        commit('setUser', res.data)
+        this.$auth.setUserToken(res.data.token.token)
       })
   },
 }

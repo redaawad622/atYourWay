@@ -58,8 +58,23 @@
             <v-icon color="#333">mdi-account-circle-outline</v-icon>
           </v-btn>
         </template>
-        <v-sheet width="250px" class="pa-8">
-          <v-btn block to="/login" exact outlined color="primary" class="mb-4" tile
+        <v-list v-if="$auth.loggedIn" min-width="200px" >
+          <v-list-item to="/user/account">
+            <v-list-item-content>{{ $auth.user.name }}</v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/user/wishlist">
+            <v-list-item-content>wishlist</v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-sheet v-else width="250px" class="pa-8">
+          <v-btn
+            block
+            to="/login"
+            exact
+            outlined
+            color="primary"
+            class="mb-4"
+            tile
             >Sign in</v-btn
           >
           <v-btn to="/login?sign=true" block outlined color="primary" tile

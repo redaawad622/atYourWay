@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-card class="my-16" width="500px">
         <v-card-text class="pa-6">
-          <sign-form v-if="sign"></sign-form>
+          <sign-form :serverErr="serverErr" v-if="sign"></sign-form>
           <login-form :serverErr="serverErr" v-else></login-form>
           <v-row justify="center" class="mt-0">
             <v-btn
@@ -12,6 +12,8 @@
               elevation="0"
               color="primary"
               tile
+              :loading="signLoading"
+              @click="signUp()"
               >Create
             </v-btn>
             <v-btn
@@ -56,6 +58,7 @@ export default {
     return {
       sign: false,
       loginLoading: false,
+      signLoading: false,
       serverErr: [],
     }
   },
@@ -67,15 +70,29 @@ export default {
       this.$store
         .dispatch('authUser/login')
         .then((res) => {
-          console.log(res)
           this.loginLoading = false
         })
         .catch((rej) => {
-          console.log(rej)
           if (rej.response.status === 422)
             this.serverErr = rej.response.data.errors
 
           this.loginLoading = false
+        })
+    },
+    signUp() {
+      this.serverErr = []
+      this.signLoading = true
+
+      this.$store
+        .dispatch('authUser/sign')
+        .then(() => {
+          this.signLoading = false
+        })
+        .catch((rej) => {
+          console.log(rej)
+          this.signLoading = false
+          if (rej.response.status === 422)
+            this.serverErr = rej.response.data.errors
         })
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet >
+  <v-sheet>
     <homeCarousel></homeCarousel>
     <homeFeaturedCategoriesSlide></homeFeaturedCategoriesSlide>
     <v-container fluid>
@@ -11,6 +11,8 @@
 </template>
 <script>
 export default {
+  auth: false,
+
   async fetch() {
     await this.$store.dispatch('home/getHomeContent')
   },

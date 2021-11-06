@@ -5,6 +5,7 @@ export const state = () => ({
   selectedProduct: null,
   selectedImage: 0,
   suggProducts: [],
+  token: null,
 })
 export const getters = {
   quickview(state) {
@@ -24,6 +25,9 @@ export const getters = {
   },
   selectedProduct(state) {
     return state.selectedProduct
+  },
+  token(state) {
+    return state.token
   },
 }
 
@@ -58,6 +62,9 @@ export const mutations = {
   setCart(state, payload) {
     state.cart = payload
   },
+  setToken(state, payload) {
+    state.token = payload.token
+  },
   removeFromCart(state, payload) {
     state.cart.splice(payload, 1)
     this.$setLocal('localCart', state.cart)
@@ -72,5 +79,13 @@ export const actions = {
     this.$axios(`/api/products/${payload}`).then((res) => {
       commit('setProduct', res.data)
     })
+  },
+  getToken({ commit, state }) {
+    console.log(state.cart)
+    this.$axios
+      .post(`/api/products/getToken`, { cart: state.cart })
+      .then((res) => {
+        commit('setToken', res.data)
+      })
   },
 }
