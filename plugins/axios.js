@@ -3,6 +3,6 @@ export default function ({ $axios }) {
   if (process.env.NODE_ENV === 'development') {
     $axios.defaults.params.store_id = 1
   } else {
-    $axios.defaults.params.store_id = process.env.store_id
+    $axios.defaults.params.store_id = process.env.store_id || 0
   }
 }
