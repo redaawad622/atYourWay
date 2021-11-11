@@ -77,30 +77,13 @@
                 (for invoice) and as your delivery address.</small
               >
             </v-stepper-step>
-
-            <v-stepper-content step="2">
-              <v-card
-                color="grey lighten-1"
-                class="mb-12"
-                height="200px"
-              ></v-card>
-              <v-btn color="primary" @click="e6 = 3"> Continue </v-btn>
-              <v-btn text @click="e6 = 1"> Back </v-btn>
-            </v-stepper-content>
+            <user-adress @set="setStep"></user-adress>
 
             <v-stepper-step :complete="e6 > 3" step="3">
               SHIPPING METHOD
             </v-stepper-step>
 
-            <v-stepper-content step="3">
-              <v-card
-                color="grey lighten-1"
-                class="mb-12"
-                height="200px"
-              ></v-card>
-              <v-btn color="primary" @click="e6 = 4"> Continue </v-btn>
-              <v-btn text @click="e6 = 2"> Back </v-btn>
-            </v-stepper-content>
+            <shipping @set="setStep"></shipping>
 
             <v-stepper-step step="4"> PAYMENTS </v-stepper-step>
             <v-stepper-content step="4">
@@ -123,11 +106,20 @@ import LoginForm from '~/components/auth/loginForm.vue'
 import SignForm from '~/components/auth/signForm.vue'
 import CartTotalSection from '~/components/cart/cartTotalSection.vue'
 import Payments from '~/components/checkout/payments.vue'
+import Shipping from '~/components/checkout/shipping.vue'
+import UserAdress from '~/components/checkout/userAdress.vue'
 export default {
   name: 'checkout',
   auth: false,
 
-  components: { CartTotalSection, LoginForm, SignForm, Payments },
+  components: {
+    CartTotalSection,
+    LoginForm,
+    SignForm,
+    Payments,
+    UserAdress,
+    Shipping,
+  },
   data() {
     return {
       loading: true,
@@ -140,6 +132,9 @@ export default {
   },
 
   methods: {
+    setStep(step) {
+      this.e6 = step
+    },
     logout() {
       this.$auth.logout()
     },

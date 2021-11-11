@@ -69,7 +69,7 @@ export default {
 
       this.$store
         .dispatch('authUser/login')
-        .then((res) => {
+        .then(() => {
           this.loginLoading = false
         })
         .catch((rej) => {
