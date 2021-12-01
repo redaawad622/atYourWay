@@ -5,7 +5,10 @@ export const state = () => ({
   selectedProduct: null,
   selectedImage: 0,
   suggProducts: [],
-  token: null,
+  token: '',
+  products: [],
+  meta: { total: 0 },
+  addNew: false,
 })
 export const getters = {
   quickview(state) {
@@ -20,6 +23,9 @@ export const getters = {
   cart(state) {
     return state.cart
   },
+  addNew(state) {
+    return state.addNew
+  },
   product(state) {
     return state.product
   },
@@ -28,6 +34,12 @@ export const getters = {
   },
   token(state) {
     return state.token
+  },
+  products(state) {
+    return state.products
+  },
+  meta(state) {
+    return state.meta
   },
 }
 
@@ -45,6 +57,10 @@ export const mutations = {
     state.product = payload.product
     state.suggProducts = payload.suggProducts
   },
+  setList(state, payload) {
+    state.products = payload.data
+    state.meta = payload.meta
+  },
   addToCart(state, payload) {
     const index = state.cart.findIndex((v) => {
       return (
@@ -57,13 +73,17 @@ export const mutations = {
     } else {
       state.cart[index].quantity += payload.quantity
     }
+    state.addNew = true
     this.$setLocal('localCart', state.cart)
   },
   setCart(state, payload) {
     state.cart = payload
   },
+  setAddNew(state, payload) {
+    state.addNew = payload
+  },
   setToken(state, payload) {
-    state.token = payload.token
+    state.token = payload.url
   },
   removeFromCart(state, payload) {
     state.cart.splice(payload, 1)
@@ -80,12 +100,23 @@ export const actions = {
       commit('setProduct', res.data)
     })
   },
+  getList({ commit }, payload) {
+    this.$axios(`/api/products/getList/${payload.type}`, {
+      params: payload,
+    }).then((res) => {
+      commit('setList', res.data)
+    })
+  },
   getToken({ commit, state }) {
-    console.log(state.cart)
     this.$axios
-      .post(`/api/products/getToken`, { cart: state.cart })
+      .post(`/api/checkout/getToken`, { cart: state.cart })
       .then((res) => {
         commit('setToken', res.data)
       })
+  },
+  saveOrder({ state }) {
+    const formData = new FormData()
+    formData.append('cart', JSON.stringify(state.cart))
+    return this.$axios.post(`/api/checkout/saveOrder`, formData)
   },
 }

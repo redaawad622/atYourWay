@@ -38,6 +38,7 @@
 
 <script>
 export default {
+  props: ['shipping'],
   computed: {
     cart() {
       return this.$store.getters['product/cart']
@@ -56,18 +57,14 @@ export default {
             (a, i) => +i.price + a,
             +item.product.sale_price
           )
-          console.log(pr)
 
           p += (pr - (pr * this.discount(item)) / 100) * item.quantity
         })
       return Math.round(p)
     },
-    shipping() {
-      return 14
-    },
 
     total() {
-      return this.price + this.shipping
+      return this.price + (this.shipping ||0)
     },
   },
   methods: {

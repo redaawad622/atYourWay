@@ -58,11 +58,17 @@
             <v-icon color="#333">mdi-account-circle-outline</v-icon>
           </v-btn>
         </template>
-        <v-list v-if="$auth.loggedIn" min-width="200px" >
+        <v-list v-if="$auth.loggedIn" min-width="200px">
           <v-list-item to="/user/account">
             <v-list-item-content>{{ $auth.user.name }}</v-list-item-content>
           </v-list-item>
-          <v-list-item to="/user/wishlist">
+          <v-list-item to="/orders">
+            <v-list-item-content>orders</v-list-item-content>
+          </v-list-item>
+
+          <v-list-item
+            to="/products/productlist?type=wishlist&description=your wishlist"
+          >
             <v-list-item-content>wishlist</v-list-item-content>
           </v-list-item>
         </v-list>
@@ -90,6 +96,7 @@
     <v-main>
       <quickview></quickview>
       <image-pop></image-pop>
+      <after-add-to-cart></after-add-to-cart>
       <Nuxt />
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
@@ -107,6 +114,7 @@
 </template>
 
 <script>
+import AfterAddToCart from '~/components/cart/afterAddToCart.vue'
 import AppFooter from '~/components/common/appFooter.vue'
 import Cart from '~/components/common/Cart.vue'
 import ImagePop from '~/components/common/imagePop.vue'
@@ -115,7 +123,7 @@ import topMenu from '~/components/topMenu.vue'
 export default {
   name: 'Default',
 
-  components: { topMenu, Quickview, Cart, AppFooter, ImagePop },
+  components: { topMenu, Quickview, Cart, AppFooter, ImagePop, AfterAddToCart },
 
   data() {
     return {

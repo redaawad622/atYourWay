@@ -28,12 +28,11 @@
         <v-list-item
           v-for="(item, k) in cart"
           :key="item.product.id + 'cart' + item.product.title"
-          :to="`/${item.product.slug}`"
         >
-          <v-list-item-avatar tile width="50px" height="auto">
+          <v-list-item-avatar @click="$router.push(`/${item.product.slug}`)" tile width="50px" height="auto">
             <v-img :src="$getUrl(item.product.images[0].full)"></v-img>
           </v-list-item-avatar>
-          <v-list-item-content>
+          <v-list-item-content @click="$router.push(`/${item.product.slug}`)">
             <v-list-item-title class="cartItemTitle">{{
               item.product.title
             }}</v-list-item-title>

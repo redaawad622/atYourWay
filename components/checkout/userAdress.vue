@@ -24,6 +24,8 @@
           label="State"
           :error-messages="serverErr['state']"
           :items="states"
+          item-text="name"
+          item-value="name"
         ></v-autocomplete>
         <v-autocomplete
           outlined
@@ -85,13 +87,18 @@ export default {
     },
   },
   methods: {
+    getCheckoutData() {
+      return this.$store.dispatch('checkout/getCheckoutData')
+    },
     setAddress() {
       this.loading = true
       this.$store
         .dispatch('checkout/setAddress', this.form)
         .then(() => {
-          this.loading = false
-          this.$emit('set', 3)
+          this.getCheckoutData().finally(() => {
+            this.loading = false
+            this.$emit('set', 3)
+          })
         })
         .catch((rej) => {
           this.loading = false
@@ -124,6 +131,12 @@ export default {
   watch: {
     'form.country'(val) {
       this.$store.dispatch('checkout/getState', val)
+    },
+    'form.state'(val) {
+      this.$emit(
+        'ship',
+        this.states[this.states.findIndex((e) => e.name === val)]
+      )
     },
   },
 }

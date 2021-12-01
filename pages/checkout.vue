@@ -77,25 +77,25 @@
                 (for invoice) and as your delivery address.</small
               >
             </v-stepper-step>
-            <user-adress @set="setStep"></user-adress>
+            <user-adress @ship="setShip" @set="setStep"></user-adress>
 
             <v-stepper-step :complete="e6 > 3" step="3">
               SHIPPING METHOD
             </v-stepper-step>
 
-            <shipping @set="setStep"></shipping>
+            <shipping :shipping="shippingPrice" @set="setStep"></shipping>
 
             <v-stepper-step step="4"> PAYMENTS </v-stepper-step>
             <v-stepper-content step="4">
               <payments :step="e6"></payments>
-              <v-btn color="primary"> checkout </v-btn>
+              <v-btn color="primary" :loading="orderLoading" @click="saveOrder()"> checkout </v-btn>
               <v-btn text @click="e6 = 3"> Back </v-btn>
             </v-stepper-content>
           </v-stepper>
         </v-card>
       </v-col>
       <v-col cols="12" sm="12" md="4">
-        <cart-total-section></cart-total-section>
+        <cart-total-section :shipping="shippingPrice"></cart-total-section>
       </v-col>
     </v-row>
   </v-container>
@@ -128,12 +128,19 @@ export default {
       serverErr: [],
       loginLoading: false,
       signLoading: false,
+      shippingPrice: '',
+      orderLoading:false
     }
   },
 
   methods: {
     setStep(step) {
       this.e6 = step
+    },
+    setShip(ship) {
+      if (ship) {
+        this.shippingPrice = ship.shippingPrice
+      }
     },
     logout() {
       this.$auth.logout()
@@ -170,6 +177,16 @@ export default {
           if (rej.response.status === 422)
             this.serverErr = rej.response.data.errors
         })
+    },
+    saveOrder() {
+      this.orderLoading = true
+      this.$store.dispatch('product/saveOrder').then((res)=>{
+        // notification success
+        this.$store.commit('product/setCart',[]);
+        this.$router.push(`/orders/${res.data.uuid}`)
+      }).finally(() => {
+        this.orderLoading = false
+      })
     },
   },
 }

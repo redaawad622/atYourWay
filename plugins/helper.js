@@ -74,6 +74,7 @@ export default ({ app }, inject) => {
     return Math.round(num)
   })
 
+
   inject('info', function () {
     const agent = {
       browser: {

@@ -70,7 +70,10 @@
                 >
                   <v-sheet color="transparent my-3">
                     <div class="d-flex mb-2 footerListItem">
-                      <nuxt-link to="/newProducts" class="itemValue">
+                      <nuxt-link
+                        to="/products/productlist?type=newProducts&description=new products"
+                        class="itemValue"
+                      >
                         New products</nuxt-link
                       >
                     </div>
@@ -143,12 +146,15 @@
                       >
                     </div>
                     <div class="d-flex mb-2 footerListItem">
-                      <nuxt-link to="/newProducts" class="itemValue">
+                      <nuxt-link to="/orders" class="itemValue">
                         Orders</nuxt-link
                       >
                     </div>
                     <div class="d-flex mb-2 footerListItem">
-                      <nuxt-link to="/newProducts" class="itemValue">
+                      <nuxt-link
+                        to="/products/productlist?type=wishlist&description=your wishlist"
+                        class="itemValue"
+                      >
                         My wishlists</nuxt-link
                       >
                     </div>

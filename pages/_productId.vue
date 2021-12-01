@@ -219,7 +219,6 @@
 import suggProducts from '~/components/products/suggProducts.vue'
 export default {
   auth: false,
-
   components: { suggProducts },
   name: 'productPage',
   data: () => {

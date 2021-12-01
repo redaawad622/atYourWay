@@ -30,7 +30,6 @@ export const mutations = {
   },
   setUser(state, payload) {
     const clone = Object.assign({}, payload, { token: undefined })
-    console.log(clone)
     state.loginForm = {
       email: '',
       password: '',

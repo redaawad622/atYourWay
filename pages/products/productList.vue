@@ -1,26 +1,12 @@
 <template>
-  <v-card class="pb-6 mt-3 px-3" v-if="category" flat>
+  <v-card class="pb-6 mt-3 px-3" flat>
     <v-container>
       <v-row>
         <v-col cols="12" sm="12">
           <v-card-title class="px-0 secondary--text">{{
-            category.name
+            this.$route.query.description
           }}</v-card-title>
-          <v-card-subtitle class="px-0">{{
-            category.description
-          }}</v-card-subtitle>
-          <v-card-subtitle class="pa-0" v-if="category.children.length > 0"
-            >sub categories</v-card-subtitle
-          >
-          <v-chip-group active-class="primary--text">
-            <v-chip
-              v-for="cat in category.children"
-              :key="cat.id + 'subCats'"
-              :to="`/categories/${cat.slug}`"
-            >
-              {{ cat.name }}
-            </v-chip>
-          </v-chip-group>
+
           <v-sheet class="d-flex justify-space-between py-4">
             <v-btn-toggle v-model="isList" color="primary" dense group>
               <v-btn :value="0" icon>
@@ -52,7 +38,7 @@
               <product-item
                 :isList="$vuetify.breakpoint.xs ? false : isList"
                 :product="product"
-                module="category"
+                module="product"
               ></product-item>
             </v-col>
           </v-row>
@@ -72,10 +58,8 @@
 <script>
 import ProductItem from '~/components/common/ProductItem.vue'
 export default {
-  auth: false,
-
   components: { ProductItem },
-
+  auth: false,
   data() {
     return {
       isList: 0,
@@ -86,34 +70,30 @@ export default {
     }
   },
   async fetch() {
-    await this.$store.dispatch('category/getCategory', {
-      id: this.$route.params.categoryId,
+    const type = this.$route.query.type
+    await this.$store.dispatch('product/getList', {
+      type,
       ...this.options,
     })
   },
   computed: {
-    category() {
-      return this.$store.getters['category/category']
-    },
     products() {
-      return this.$store.getters['category/products']
+      return this.$store.getters['product/products']
     },
     meta() {
-      return this.$store.getters['category/meta']
+      return this.$store.getters['product/meta']
     },
   },
 
   head() {
     return {
-      title: this.category ? this.category.name : 'category',
+      title: this.$route.query.description || 'products',
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
           hid: 'description',
           name: 'description',
-          content: this.category
-            ? this.category.description
-            : 'category description',
+          content: this.$route.query.description,
         },
       ],
     }
@@ -121,8 +101,8 @@ export default {
   watch: {
     options: {
       handler(val) {
-        this.$store.dispatch('category/getCategory', {
-          id: this.$route.params.categoryId,
+        this.$store.dispatch('product/getList', {
+          type: this.$route.query.type,
           ...val,
         })
       },
@@ -130,7 +110,8 @@ export default {
     },
   },
   destroyed() {
-    this.$store.commit('category/setCategory', { category: null, products: [] })
+    this.$store.commit('product/setList', { data: [], meta: { total: 0 } })
   },
+  created() {},
 }
 </script>

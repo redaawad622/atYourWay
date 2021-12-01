@@ -89,7 +89,6 @@ export default {
           this.signLoading = false
         })
         .catch((rej) => {
-          console.log(rej)
           this.signLoading = false
           if (rej.response.status === 422)
             this.serverErr = rej.response.data.errors
