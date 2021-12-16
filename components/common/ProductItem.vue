@@ -23,6 +23,9 @@
         min-height="340px"
         min-width="272px"
       >
+        <template v-slot:placeholder>
+          <img-slot></img-slot>
+        </template>
         <div @click="$router.push(`/${product.slug}`)" class="over"></div>
         <v-speed-dial
           :value="$vuetify.breakpoint.xs ? true : hover"
@@ -252,7 +255,9 @@
 </template>
 
 <script>
+import imgSlot from './imgSlot.vue'
 export default {
+  components: { imgSlot },
   name: 'productItem',
   props: {
     product: {

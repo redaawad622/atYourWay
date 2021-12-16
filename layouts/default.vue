@@ -5,11 +5,22 @@
         <li class="pe-4">
           <nuxt-link to="/" class="link">home</nuxt-link>
         </li>
-        <top-menu
-          v-for="(item, k) in mainMenu"
-          :key="`main${k}`"
-          :menu="item"
-        ></top-menu>
+        <template v-for="(item, k) in mainMenu">
+          <top-menu
+            v-if="item.children && item.children.length > 0"
+            :key="`main${k}`"
+            :menu="item"
+          ></top-menu>
+
+          <li v-else class="pe-4" :key="`main${k}`">
+            <nuxt-link :to="`/categories/${item.slug}`" class="link">{{
+              item.name
+            }}</nuxt-link>
+          </li>
+        </template>
+         <li class="pe-4">
+          <nuxt-link to="/contactUs" class="link">contact us</nuxt-link>
+        </li>
       </ul>
       <v-btn v-else icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
@@ -99,15 +110,8 @@
       <after-add-to-cart></after-add-to-cart>
       <Nuxt />
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
+    <v-navigation-drawer v-model="rightDrawer" temporary fixed>
+      <navdrawer-list></navdrawer-list>
     </v-navigation-drawer>
     <app-footer></app-footer>
   </v-app>
@@ -118,12 +122,21 @@ import AfterAddToCart from '~/components/cart/afterAddToCart.vue'
 import AppFooter from '~/components/common/appFooter.vue'
 import Cart from '~/components/common/Cart.vue'
 import ImagePop from '~/components/common/imagePop.vue'
+import NavdrawerList from '~/components/common/navdrawerList.vue'
 import Quickview from '~/components/products/quickview.vue'
 import topMenu from '~/components/topMenu.vue'
 export default {
   name: 'Default',
 
-  components: { topMenu, Quickview, Cart, AppFooter, ImagePop, AfterAddToCart },
+  components: {
+    topMenu,
+    Quickview,
+    Cart,
+    AppFooter,
+    ImagePop,
+    AfterAddToCart,
+    NavdrawerList,
+  },
 
   data() {
     return {

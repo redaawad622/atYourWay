@@ -13,7 +13,11 @@
             max-height="68vh"
             contain
             :src="$getUrl(product.images[selectedImage].full)"
-          ></v-img>
+          >
+            <template v-slot:placeholder>
+              <img-slot></img-slot>
+            </template>
+          </v-img>
         </v-col>
         <v-col cols="12" class="px-2 d-flex justify-center">
           <v-slide-group
@@ -31,7 +35,11 @@
                 max-width="80px"
                 :class="{ selected: k == selectedImage }"
                 @click="selectedImage = k"
-              ></v-img>
+              >
+                <template v-slot:placeholder>
+                  <img-slot></img-slot>
+                </template>
+              </v-img>
             </v-slide-item>
           </v-slide-group>
         </v-col>
@@ -41,7 +49,9 @@
 </template>
 
 <script>
+import imgSlot from './imgSlot.vue'
 export default {
+  components: { imgSlot },
   name: 'imagePop',
   computed: {
     product() {

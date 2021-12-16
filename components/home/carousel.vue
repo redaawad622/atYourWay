@@ -43,6 +43,9 @@
             "
             max-width="100%"
           >
+            <template v-slot:placeholder>
+              <img-slot :withText="false"></img-slot>
+            </template>
             <div
               class="cover-text d-flex flex-column"
               :class="{ right: slide.isRight }"
@@ -98,7 +101,9 @@
 </template>
 
 <script>
+import imgSlot from '../common/imgSlot.vue'
 export default {
+  components: { imgSlot },
   async fetch() {
     await this.$store.dispatch('home/getCarouselCollection')
   },

@@ -6,6 +6,9 @@
       class="align-center"
       :src="$getUrl(cat.image)"
     >
+      <template v-slot:placeholder>
+        <img-slot :withText="false"></img-slot>
+      </template>
       <v-card-text>
         <v-card-title class="text-uppercase secondary--text font-weight-bold">{{
           cat.name
@@ -15,14 +18,18 @@
           v-if="cat.description"
           >{{ cat.description }}
         </v-card-subtitle>
-        <v-btn text color="primary" small class="text-capitalize"> Shop now</v-btn>
+        <v-btn text color="primary" small class="text-capitalize">
+          Shop now</v-btn
+        >
       </v-card-text>
     </v-img>
   </v-card>
 </template>
 
 <script>
+import imgSlot from '../common/imgSlot.vue'
 export default {
+  components: { imgSlot },
   props: {
     cat: {
       type: Object,

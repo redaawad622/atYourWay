@@ -21,7 +21,11 @@
                 :aspect-ratio="0.8"
                 :src="$getUrl(product.images[selectedImage].full)"
                 @click="openImage(selectedImage)"
-              ></v-img>
+              >
+                <template v-slot:placeholder>
+                  <img-slot></img-slot>
+                </template>
+              </v-img>
             </v-col>
             <v-col cols="12" class="px-2" v-if="product.images.length > 0">
               <v-slide-group mandatory :show-arrows="!$vuetify.breakpoint.xs">
@@ -36,7 +40,11 @@
                     max-width="80px"
                     :class="{ selected: k == selectedImage }"
                     @click="selectedImage = k"
-                  ></v-img>
+                  >
+                    <template v-slot:placeholder>
+                      <img-slot></img-slot>
+                    </template>
+                  </v-img>
                 </v-slide-item>
               </v-slide-group>
             </v-col>
@@ -211,15 +219,16 @@
 
       <div class="grey--text ms-4">1 (413)</div>
     </v-row>
-    <sugg-products ></sugg-products>
+    <sugg-products></sugg-products>
   </v-card>
 </template>
 
 <script>
+import ImgSlot from '~/components/common/imgSlot.vue'
 import suggProducts from '~/components/products/suggProducts.vue'
 export default {
   auth: false,
-  components: { suggProducts },
+  components: { suggProducts, ImgSlot },
   name: 'productPage',
   data: () => {
     return {

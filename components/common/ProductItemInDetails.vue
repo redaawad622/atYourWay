@@ -25,6 +25,9 @@
           :max-height="$vuetify.breakpoint.xs ? '410px' : '450px'"
           :max-width="$vuetify.breakpoint.xs ? 'auto' : '350px'"
         >
+          <template v-slot:placeholder>
+            <img-slot></img-slot>
+          </template>
           <div style="top: 30px; position: relative">
             <div class="mb-3">
               <span class="primary white--text lblProd"

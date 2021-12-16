@@ -61,12 +61,14 @@ export default {
   methods: {
     hasSubs(children) {
       let sub = false
-      children.forEach((element) => {
-        if (element.children && element.children.length < 1) {
-          sub = false
-        } else {
+      children.every((element) => {
+        if (element.children && element.children.length > 0) {
           sub = true
+          return false
+        } else {
+          sub = false
         }
+        return true
       })
       return sub
     },
