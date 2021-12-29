@@ -18,4 +18,7 @@ export const actions = {
       commit('setMainMenu', res.data)
     })
   },
+  saveContact(_, payload) {
+    return this.$axios.post(`/api/contactUs`, payload)
+  },
 }

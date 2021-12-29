@@ -18,8 +18,8 @@
             }}</nuxt-link>
           </li>
         </template>
-         <li class="pe-4">
-          <nuxt-link to="/contactUs" class="link">contact us</nuxt-link>
+        <li class="pe-4">
+          <nuxt-link exact to="/contactUs" class="link">contact us</nuxt-link>
         </li>
       </ul>
       <v-btn v-else icon @click.stop="rightDrawer = !rightDrawer">
@@ -33,28 +33,7 @@
       >
 
       <v-spacer />
-      <v-menu
-        offset-y
-        bottom
-        origin="center center"
-        transition="scale-transition"
-        :close-on-content-click="false"
-        :nudge-bottom="8"
-        tile
-        contentClass="noShadow"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon color="#333">mdi-magnify</v-icon>
-          </v-btn>
-        </template>
-        <v-sheet class="pa-8" width="400px">
-          <v-autocomplete
-            placeholder="search..."
-            append-icon="mdi-magnify"
-          ></v-autocomplete>
-        </v-sheet>
-      </v-menu>
+      <search-bar></search-bar>
       <v-menu
         offset-y
         tile
@@ -123,6 +102,7 @@ import AppFooter from '~/components/common/appFooter.vue'
 import Cart from '~/components/common/Cart.vue'
 import ImagePop from '~/components/common/imagePop.vue'
 import NavdrawerList from '~/components/common/navdrawerList.vue'
+import SearchBar from '~/components/common/searchBar.vue'
 import Quickview from '~/components/products/quickview.vue'
 import topMenu from '~/components/topMenu.vue'
 export default {
@@ -136,6 +116,7 @@ export default {
     ImagePop,
     AfterAddToCart,
     NavdrawerList,
+    SearchBar,
   },
 
   data() {
@@ -194,7 +175,7 @@ export default {
 }
 .link {
   text-decoration: none;
-  color: #333;
+  color: #333 !important;
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -203,9 +184,10 @@ export default {
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
 }
 .link:hover,
-.link:hover .v-icon.v-icon {
+.link:hover .v-icon.v-icon,
+.link.nuxt-link-exact-active {
   text-decoration: none;
-  color: var(--v-primary-base);
+  color: var(--v-primary-base) !important;
 }
 .appMenu {
   list-style: none;

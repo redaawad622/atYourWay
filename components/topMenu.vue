@@ -36,7 +36,7 @@
           >
           <ul v-if="sub.children && sub.children.length > 0" class="ul-level3">
             <li v-for="subSub in sub.children" :key="subSub.id + 'subSubm'">
-              <nuxt-link :to="'/' + subSub.slug" class="link">{{
+              <nuxt-link :to="'/categories/' + subSub.slug" class="link">{{
                 subSub.name
               }}</nuxt-link>
             </li>

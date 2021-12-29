@@ -2,7 +2,18 @@
   <v-card class="pb-6 mt-3 px-3" v-if="category" flat>
     <v-container>
       <v-row>
-        <v-col cols="12" sm="12">
+        <v-col cols="12" md="3">
+          <component
+            :is="$vuetify.breakpoint.mdAndUp ? 'v-sheet' : 'v-bottom-sheet'"
+            v-model="filterSheet"
+          >
+            <filter-list
+              @close="filterSheet = false"
+              @setFilter="setFilter"
+            ></filter-list>
+          </component>
+        </v-col>
+        <v-col cols="12" md="9">
           <v-card-title class="px-0 secondary--text">{{
             category.name
           }}</v-card-title>
@@ -38,6 +49,9 @@
               <option value="low">Price, low to high</option>
               <option value="high">Price, high to low</option>
             </select>
+            <v-btn icon v-if="!$vuetify.breakpoint.mdAndUp" @click="filterSheet = true"
+              ><v-icon>mdi-filter-outline</v-icon></v-btn
+            >
           </v-sheet>
           <v-row>
             <v-col
@@ -45,8 +59,8 @@
               :key="product.title + product.id + index + 'cat'"
               cols="12"
               :sm="isList ? 12 : 6"
-              :md="isList ? 12 : 4"
-              :lg="isList ? 6 : 3"
+              :md="isList ? 12 : 6"
+              :lg="isList ? 6 : 4"
               :xl="isList ? 4 : 2"
             >
               <product-item
@@ -70,11 +84,12 @@
 </template>
 
 <script>
+import FilterList from '~/components/category/filterList.vue'
 import ProductItem from '~/components/common/ProductItem.vue'
 export default {
   auth: false,
 
-  components: { ProductItem },
+  components: { ProductItem, FilterList },
 
   data() {
     return {
@@ -82,6 +97,11 @@ export default {
       options: {
         sort: 'relevance',
         page: 1,
+      },
+      filterSheet: false,
+      filter: {
+        min: '',
+        max: '',
       },
     }
   },
@@ -118,13 +138,23 @@ export default {
       ],
     }
   },
+  methods: {
+    setFilter(filter) {
+      this.filter = filter
+      this.makeFilter()
+    },
+    makeFilter() {
+      this.$store.dispatch('category/getCategory', {
+        id: this.$route.params.categoryId,
+        ...this.options,
+        ...this.filter,
+      })
+    },
+  },
   watch: {
     options: {
-      handler(val) {
-        this.$store.dispatch('category/getCategory', {
-          id: this.$route.params.categoryId,
-          ...val,
-        })
+      handler() {
+        this.makeFilter()
       },
       deep: true,
     },
@@ -134,3 +164,17 @@ export default {
   },
 }
 </script>
+<style scoped>
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+</style>
+<style>
+.v-text-field--outlined.v-input--dense > .v-input__control > .v-input__slot {
+  min-height: auto !important;
+}
+</style>
