@@ -12,7 +12,7 @@
               aspect-ratio="0.8"
               class="mx-2"
               :contain="$vuetify.breakpoint.smAndDown"
-              :height="$vuetify.breakpoint.smAndDown ? '180px' : auto"
+              :height="$vuetify.breakpoint.smAndDown ? '180px' :'auto'"
               v-if="lastProduct.product.images"
               :src="$getUrl(lastProduct.product.images[0].full)"
             ></v-img

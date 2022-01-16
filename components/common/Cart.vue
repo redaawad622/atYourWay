@@ -5,11 +5,12 @@
     bottom
     offset-y
     :close-on-content-click="false"
+    allow-overflow
     open-on-hover
     tile
     :close-delay="100"
-    :nudge-bottom="8"
-    max-height="600px"
+    :nudge-bottom="$vuetify.breakpoint.mdAndUp ? 8 : 4"
+    :max-height="$vuetify.breakpoint.mdAndUp ? 450 : 350"
     contentClass="noShadow"
   >
     <template v-slot:activator="{ on, attrs }">
@@ -19,7 +20,13 @@
         </v-badge>
       </v-btn>
     </template>
-    <v-sheet class="pa-9" v-if="cart && cart.length > 0">
+    <v-sheet
+      :class="{
+        'pa-9': $vuetify.breakpoint.mdAndUp,
+        'pa-4': $vuetify.breakpoint.smAndDown,
+      }"
+      v-if="cart && cart.length > 0"
+    >
       <v-list-item-title class="text-capitalize headline"
         >your cart: {{ cartLen }}</v-list-item-title
       >
@@ -29,13 +36,20 @@
           v-for="(item, k) in cart"
           :key="item.product.id + 'cart' + item.product.title"
         >
-          <v-list-item-avatar @click="$router.push(`/${item.product.slug}`)" tile width="50px" height="auto">
+          <v-list-item-avatar
+            @click="$router.push(`/${item.product.slug}`)"
+            tile
+            width="50px"
+            height="auto"
+          >
             <v-img :src="$getUrl(item.product.images[0].full)"></v-img>
           </v-list-item-avatar>
           <v-list-item-content @click="$router.push(`/${item.product.slug}`)">
-            <v-list-item-title class="cartItemTitle">{{
-              item.product.title
-            }}</v-list-item-title>
+            <v-list-item-title
+              :title="item.product.title"
+              class="cartItemTitle"
+              >{{ $subStr(item.product.title) }}</v-list-item-title
+            >
             <v-list-item-subtitle class="primary--text"
               >{{ price(item) }}
               <v-chip class="mx-1" small>{{ item.quantity }}</v-chip>

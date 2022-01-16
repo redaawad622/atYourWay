@@ -74,6 +74,10 @@ export default ({ app }, inject) => {
     return Math.round(num)
   })
 
+  inject('subStr', function (str="",length=56) {
+    return str.length>length?str.substr(0,length)+"...":str;
+  })
+
 
   inject('info', function () {
     const agent = {

@@ -113,8 +113,9 @@
 
 <script>
 import countDown from './countDown.vue'
+import ImgSlot from './imgSlot.vue'
 export default {
-  components: { countDown },
+  components: { countDown, ImgSlot },
   name: 'productItemInDetails',
   props: {
     product: {

@@ -19,7 +19,20 @@
               : ''
           )
         "
-        :aspect-ratio="0.8"
+        :contain="
+          product.images[0]
+            ? Boolean(
+                product.images[hover ? (product.images.length > 1 ? 1 : 0) : 0]
+                  .auto
+              )
+            : false
+        "
+        :aspect-ratio="
+          product.images[0]
+            ? product.images[hover ? (product.images.length > 1 ? 1 : 0) : 0]
+                .aspect_ratio
+            : 0.8
+        "
         min-height="340px"
         min-width="272px"
       >
@@ -126,7 +139,8 @@
         <v-card-title
           @click="$router.push(`/${product.slug}`)"
           class="prodTitle secondary--text"
-          >{{ product.title }}</v-card-title
+          :title="product.title"
+          >{{ $subStr(product.title) }}</v-card-title
         >
 
         <v-card-text>
@@ -320,9 +334,12 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-.prodTitle:hover {
-  color: var(--v-primary-base) !important;
-  cursor: pointer;
+.prodTitle {
+  font-size: 1rem;
+  &:hover {
+    color: var(--v-primary-base) !important;
+    cursor: pointer;
+  }
 }
 .prodAttr {
   transition: all 600ms ease;

@@ -11,7 +11,7 @@
       <h2 class="text-h6 mb-2">Price</h2>
 
       <v-chip-group v-model="selectedPrice" column>
-        <v-chip filter outlined v-for="item in priceList" :key="item.txt">
+        <v-chip filter active-class="accent" v-for="item in priceList" :key="item.txt">
           {{ item.txt }}
         </v-chip>
       </v-chip-group>
