@@ -2,6 +2,7 @@
   "name": "atYourWay",
   "version": "1.0.0",
   "private": true,
+  "description": "AtYouWay is Your Complete Online Solution To Start & Elevate Your Business",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
